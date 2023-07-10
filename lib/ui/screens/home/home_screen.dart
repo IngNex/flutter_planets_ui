@@ -18,43 +18,41 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/planets/galaxia.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/planets/star.png'),
+                fit: BoxFit.cover)),
         child: Column(
           children: [
             const Padding(
               padding: const EdgeInsets.only(top: 50, bottom: 20),
               child: Text(
-                'Planet',
+                'SPACE TOUR',
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
+            Container(
+              height: 300,
               padding: const EdgeInsets.all(20),
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                child: TweenAnimationBuilder<double>(
-                  duration: const Duration(seconds: 2),
-                  curve: Curves.easeInOutBack,
-                  tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
-                  builder: (context, turn, child) {
-                    return Transform.rotate(
-                      alignment: Alignment.center,
-                      angle: turn * 2,
-                      child: Image(
-                        image: AssetImage(planets[_valuePage].image),
-                      ),
-                    );
-                  },
-                ),
+              child: TweenAnimationBuilder<double>(
+                duration: const Duration(seconds: 2),
+                curve: Curves.easeInOutBack,
+                tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
+                builder: (context, turn, child) {
+                  return Transform.rotate(
+                    alignment: Alignment.center,
+                    angle: turn * 2,
+                    child: Image(
+                      width: 300,
+                      image: AssetImage(planets[_valuePage].image),
+                    ),
+                  );
+                },
               ),
             ),
             Expanded(
@@ -73,30 +71,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 250),
                     margin: EdgeInsets.only(
-                        top: index == _valuePage ? 40 : 100,
-                        bottom: index == _valuePage ? 40 : 100),
+                        top: index == _valuePage ? 40 : 80,
+                        bottom: index == _valuePage ? 40 : 80),
                     child: SvgPicture.asset(planets[index].picture),
                   );
                 },
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(36),
-                  topRight: Radius.circular(
-                    36,
-                  ),
-                ),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(_valueSwitch.toString()),
-                  Text('Planets'),
-                  Text('Planets'),
-                  Text('Planets'),
-                  Text('Planets'),
+                  Text(
+                    'AGE',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Text(
+                    '+5 BILLIONS YEARS',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  Text(
+                    'STAR TYPE',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Text(
+                    'YELLOW STAR',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  Text(
+                    'RADIUS',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Text(
+                    '6.051 km',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  Text(
+                    'GRAVITY',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  Text(
+                    '8.87 m/s2',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ],
               ),
             )
