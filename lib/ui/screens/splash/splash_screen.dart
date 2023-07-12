@@ -32,8 +32,39 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
+          Positioned(
+            top: -50,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: size.width,
+              decoration: const BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.topCenter,
+                  radius: 0.8,
+                  colors: [Color.fromARGB(255, 0, 81, 255), Colors.black],
+                ),
+              ),
+            ),
+          ),
+          // Radial Bottom Blue
+          Positioned(
+            bottom: -50,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: size.width,
+              decoration: const BoxDecoration(
+                gradient: RadialGradient(
+                    center: Alignment.bottomCenter,
+                    radius: 0.8,
+                    colors: [Color.fromARGB(255, 0, 81, 255), Colors.black]),
+              ),
+            ),
+          ),
           Positioned(
             top: size.height * 0.35,
             left: 0,
@@ -56,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage('assets/images/picture.png'),
+                              image: AssetImage('assets/images/star.png'),
                             ),
                           ),
                           child: const Hero(
@@ -82,7 +113,10 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: const Text(
                         'SPACE TOUR',
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     );
                   },
