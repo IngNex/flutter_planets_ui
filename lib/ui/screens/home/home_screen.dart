@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planets_ui/data/memory/in_memory_planets.dart';
-import 'package:flutter_planets_ui/ui/widgets/GlassBox.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 const _duration = Duration(milliseconds: 300);
@@ -24,10 +23,42 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          // Radial Top Blue
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: size.width,
+              decoration: const BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.topCenter,
+                  radius: 0.8,
+                  colors: [Color.fromARGB(255, 0, 81, 255), Colors.black],
+                ),
+              ),
+            ),
+          ),
+          // Radial Bottom Blue
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: size.width,
+              decoration: const BoxDecoration(
+                gradient: RadialGradient(
+                    center: Alignment.bottomCenter,
+                    radius: 0.8,
+                    colors: [Color.fromARGB(255, 0, 81, 255), Colors.black]),
+              ),
+            ),
+          ),
+          // Image background
           Positioned(
             left: -200,
             right: -200,
-            top: -250,
+            top: -220,
             bottom: -200,
             child: TweenAnimationBuilder<double>(
               duration: const Duration(milliseconds: 1000),
@@ -35,14 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
               tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
               builder: (context, turn, child) {
                 return Transform.rotate(
-                    alignment: Alignment.center,
-                    angle: turn * 0.1,
-                    child: const Image(
-                      image: AssetImage('assets/images/space.png'),
-                    ));
+                  alignment: Alignment.center,
+                  angle: turn * 0.1,
+                  child: const Image(
+                    image: AssetImage('assets/images/space.png'),
+                  ),
+                );
               },
             ),
           ),
+          //Title and logo
           Positioned(
             top: size.height * 0.05,
             left: 0,
@@ -77,8 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          //Image of planets
           Positioned(
-            top: size.height * 0.12,
+            top: size.height * 0.15,
             left: 0,
             right: 0,
             child: Container(
@@ -86,15 +120,18 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 1000),
-                //curve: Curves.easeInOutBack,
                 tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
                 builder: (context, turn, child) {
                   return Transform.rotate(
                     alignment: Alignment.center,
                     angle: turn * 1.5,
-                    child: Image(
-                      width: 300,
-                      image: AssetImage(planets[_valuePage].image),
+                    child: AnimatedSwitcher(
+                      duration: _duration,
+                      child: Image(
+                        key: Key(planets[_valuePage].name),
+                        width: 300,
+                        image: AssetImage(planets[_valuePage].image),
+                      ),
                     ),
                   );
                 },
@@ -108,27 +145,46 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SizedBox(
               width: size.width,
               height: size.height * 0.45,
-              //color: Colors.red,
               child: Stack(
                 children: [
-                  const GlassBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    radius: 30.0,
-                    sigma: 2.0,
-                  ),
+                  // const GlassBox(
+                  //   width: double.infinity,
+                  //   height: double.infinity,
+                  //   borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(36),
+                  //       topRight: Radius.circular(36)),
+                  //   sigma: 2.0,
+                  // ),
                   Column(
                     children: [
-                      AnimatedSwitcher(
-                        duration: _duration,
-                        child: Text(
-                          key: Key(planets[_valuePage].name),
-                          planets[_valuePage].name,
-                          style: const TextStyle(
-                              fontSize: 80, color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: AnimatedSwitcher(
+                          duration: _duration,
+                          child: Text(
+                            key: Key(planets[_valuePage].name),
+                            planets[_valuePage].name,
+                            style: const TextStyle(
+                                fontSize: 60, color: Colors.white),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: AnimatedSwitcher(
+                          duration: _duration,
+                          child: Text(
+                            key: Key(planets[_valuePage].name),
+                            planets[_valuePage].description,
+                            textAlign: TextAlign.justify,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -137,29 +193,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Text(
                                 'RADIUS',
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
+                              const SizedBox(height: 10),
                               AnimatedSwitcher(
                                 duration: _duration,
                                 child: Text(
                                   key: Key(planets[_valuePage].name),
                                   planets[_valuePage].radius,
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                'GRAVITY',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                              AnimatedSwitcher(
-                                duration: _duration,
-                                child: Text(
-                                  key: Key(planets[_valuePage].name),
-                                  planets[_valuePage].gravity,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),
                               ),
@@ -170,34 +214,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Text(
                                 'GRAVITY',
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                              AnimatedSwitcher(
-                                duration: _duration,
-                                child: Text(
-                                  key: Key(planets[_valuePage].name),
-                                  planets[_valuePage].gravity,
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
-                                ),
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 10),
-                              const Text(
-                                'GRAVITY',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
                               AnimatedSwitcher(
                                 duration: _duration,
                                 child: Text(
                                   key: Key(planets[_valuePage].name),
                                   planets[_valuePage].gravity,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),
                               ),
                             ],
-                          ),
+                          )
                         ],
                       ),
                       Expanded(
@@ -216,8 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             return AnimatedContainer(
                               duration: const Duration(milliseconds: 250),
                               margin: EdgeInsets.only(
-                                top: index == _valuePage ? 40 : 70,
-                                bottom: index == _valuePage ? 40 : 70,
+                                top: index == _valuePage ? 40 : 60,
+                                bottom: index == _valuePage ? 40 : 60,
                               ),
                               child: SvgPicture.asset(planets[index].picture),
                             );

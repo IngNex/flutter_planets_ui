@@ -6,21 +6,21 @@ class GlassBox extends StatelessWidget {
       {super.key,
       required this.width,
       required this.height,
-      required this.radius,
+      required this.borderRadius,
       required this.sigma,
       this.color = Colors.white});
 
-  final width;
-  final height;
-  final radius;
-  final sigma;
+  final dynamic width;
+  final dynamic height;
+  final dynamic borderRadius;
+  final dynamic sigma;
   //final child;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: borderRadius,
       child: Container(
         width: width,
         height: height,
@@ -35,7 +35,7 @@ class GlassBox extends StatelessWidget {
             //gradient effect
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(radius),
+                borderRadius: borderRadius,
                 border: Border.all(
                   color: color.withOpacity(0.13),
                 ),

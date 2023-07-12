@@ -1,6 +1,7 @@
 class Planets {
   final String name;
   final String description;
+  final String temperature;
   final String radius;
   final String gravity;
   final String duration_day;
@@ -10,6 +11,7 @@ class Planets {
   Planets({
     required this.name,
     required this.description,
+    required this.temperature,
     required this.radius,
     required this.gravity,
     required this.duration_day,
