@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 29, 28, 28),
       body: Column(
         children: [
           // Positioned(
@@ -39,13 +39,35 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           // ),
           const Padding(
-            padding: const EdgeInsets.only(top: 50, bottom: 20),
-            child: Text(
-              'SPACE TOUR',
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+            padding: EdgeInsets.only(top: 50, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'SPACE',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Hero(
+                    tag: 'logo',
+                    child: Image(
+                      color: Colors.white,
+                      image: AssetImage('assets/images/logo.png'),
+                    ),
+                  ),
+                ),
+                Text(
+                  'TOUR',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
           Container(
