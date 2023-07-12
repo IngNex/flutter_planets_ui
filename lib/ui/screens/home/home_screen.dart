@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planets_ui/data/memory/in_memory_planets.dart';
+import 'package:flutter_planets_ui/ui/widgets/GlassBox.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 const _duration = Duration(milliseconds: 300);
@@ -12,35 +13,41 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double _valueSwitch = 0.0;
+  //double _valueSwitch = 0.0;
   int _valuePage = 0;
-  double _currentPage = 0.0;
   final _pageController = PageController(viewportFraction: 0.35);
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 29, 28, 28),
-      body: Column(
+      backgroundColor: Colors.black,
+      body: Stack(
         children: [
-          // Positioned(
-          //   top: -20,
-          //   left: -20,
-          //   right: -20,
-          //   bottom: -20,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //         image: DecorationImage(
-          //             image: AssetImage('assets/planets/picture.png'),
-          //             fit: BoxFit.cover)),
-          //     child: Transform.rotate(
-          //       angle: 50,
-          //     ),
-          //   ),
-          // ),
-          const Padding(
-            padding: EdgeInsets.only(top: 50, bottom: 20),
-            child: Row(
+          Positioned(
+            left: -200,
+            right: -200,
+            top: -250,
+            bottom: -200,
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 1000),
+              //curve: Curves.easeInOutBack,
+              tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
+              builder: (context, turn, child) {
+                return Transform.rotate(
+                    alignment: Alignment.center,
+                    angle: turn * 0.1,
+                    child: const Image(
+                      image: AssetImage('assets/images/space.png'),
+                    ));
+              },
+            ),
+          ),
+          Positioned(
+            top: size.height * 0.05,
+            left: 0,
+            right: 0,
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -70,140 +77,159 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            height: 300,
-            padding: const EdgeInsets.all(8.0),
-            child: TweenAnimationBuilder<double>(
-              duration: const Duration(milliseconds: 1500),
-              //curve: Curves.easeInOutBack,
-              tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
-              builder: (context, turn, child) {
-                return Transform.rotate(
-                  alignment: Alignment.center,
-                  angle: turn * 2,
-                  child: Image(
-                    width: 300,
-                    image: AssetImage(planets[_valuePage].image),
+          Positioned(
+            top: size.height * 0.12,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 300,
+              padding: const EdgeInsets.all(8.0),
+              child: TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 1000),
+                //curve: Curves.easeInOutBack,
+                tween: Tween(begin: 0.0, end: _valuePage.toDouble()),
+                builder: (context, turn, child) {
+                  return Transform.rotate(
+                    alignment: Alignment.center,
+                    angle: turn * 1.5,
+                    child: Image(
+                      width: 300,
+                      image: AssetImage(planets[_valuePage].image),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              width: size.width,
+              height: size.height * 0.45,
+              //color: Colors.red,
+              child: Stack(
+                children: [
+                  const GlassBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                    radius: 30.0,
+                    sigma: 2.0,
                   ),
-                );
-              },
+                  Column(
+                    children: [
+                      AnimatedSwitcher(
+                        duration: _duration,
+                        child: Text(
+                          key: Key(planets[_valuePage].name),
+                          planets[_valuePage].name,
+                          style: const TextStyle(
+                              fontSize: 80, color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              const Text(
+                                'RADIUS',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                              AnimatedSwitcher(
+                                duration: _duration,
+                                child: Text(
+                                  key: Key(planets[_valuePage].name),
+                                  planets[_valuePage].radius,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                'GRAVITY',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                              AnimatedSwitcher(
+                                duration: _duration,
+                                child: Text(
+                                  key: Key(planets[_valuePage].name),
+                                  planets[_valuePage].gravity,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Text(
+                                'GRAVITY',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                              AnimatedSwitcher(
+                                duration: _duration,
+                                child: Text(
+                                  key: Key(planets[_valuePage].name),
+                                  planets[_valuePage].gravity,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                'GRAVITY',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                              AnimatedSwitcher(
+                                duration: _duration,
+                                child: Text(
+                                  key: Key(planets[_valuePage].name),
+                                  planets[_valuePage].gravity,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: PageView.builder(
+                          controller: _pageController,
+                          onPageChanged: (value) {
+                            setState(() {
+                              _valuePage = value;
+                            });
+                          },
+                          itemCount: planets.length,
+                          physics: const BouncingScrollPhysics(
+                              parent: ClampingScrollPhysics()),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 250),
+                              margin: EdgeInsets.only(
+                                top: index == _valuePage ? 40 : 70,
+                                bottom: index == _valuePage ? 40 : 70,
+                              ),
+                              child: SvgPicture.asset(planets[index].picture),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          AnimatedSwitcher(
-            duration: _duration,
-            child: Text(
-              key: Key(planets[_valuePage].name),
-              planets[_valuePage].name,
-              style: const TextStyle(fontSize: 80, color: Colors.white),
-            ),
-          ),
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  _valuePage = value;
-                });
-              },
-              itemCount: planets.length,
-              physics:
-                  const BouncingScrollPhysics(parent: ClampingScrollPhysics()),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  margin: EdgeInsets.only(
-                      top: index == _valuePage ? 40 : 80,
-                      bottom: index == _valuePage ? 40 : 80),
-                  child: SvgPicture.asset(planets[index].picture),
-                );
-              },
-            ),
-          ),
-
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Row(
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    const Text(
-                      'RADIUS',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    AnimatedSwitcher(
-                      duration: _duration,
-                      child: Text(
-                        key: Key(planets[_valuePage].name),
-                        planets[_valuePage].radius,
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'GRAVITY',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    AnimatedSwitcher(
-                      duration: _duration,
-                      child: Text(
-                        key: Key(planets[_valuePage].name),
-                        planets[_valuePage].gravity,
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    const Text(
-                      'GRAVITY',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    AnimatedSwitcher(
-                      duration: _duration,
-                      child: Text(
-                        key: Key(planets[_valuePage].name),
-                        planets[_valuePage].gravity,
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'GRAVITY',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    AnimatedSwitcher(
-                      duration: _duration,
-                      child: Text(
-                        key: Key(planets[_valuePage].name),
-                        planets[_valuePage].gravity,
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-          // Positioned(
-          //   left: 0,
-          //   child: RotatedBox(
-          //     quarterTurns: 1,
-          //     child: Slider(
-          //       min: 0,
-          //       max: 5,
-          //       value: _valueSwitch,
-          //       onChanged: (value) {
-          //         setState(() {
-          //           _valueSwitch = value;
-          //         });
-          //       },
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
